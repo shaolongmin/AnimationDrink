@@ -32,6 +32,8 @@ public abstract class BaseView extends View {
 
     private float anchorY = 0.5f;
 
+    private float scaleX = 1,scaleY = 1;
+
     public float getAnchorX() {
         return anchorX;
     }
@@ -90,11 +92,37 @@ public abstract class BaseView extends View {
     }
 
     public int getMyWidth() {
-        return width;
+        return (int) (width * scaleX);
     }
 
     public int getMyHeight() {
-        return height;
+        return (int) (height * scaleX);
+    }
+
+    @Override
+    public float getScaleX() {
+        return scaleX;
+    }
+
+    @Override
+    public void setScaleX(float scaleX) {
+        this.scaleX = scaleX;
+    }
+
+    @Override
+    public float getScaleY() {
+        return scaleY;
+    }
+
+    @Override
+    public void setScaleY(float scaleY) {
+        this.scaleY = scaleY;
+    }
+
+    public void setScale(float v) {
+        setScaleX(v);
+        setScaleY(v);
+        getParent().requestLayout();
     }
 
     public void setPositionX(int PositionX) {
@@ -135,7 +163,7 @@ public abstract class BaseView extends View {
         float offsetX = (float) (4 + (Math.random() * 8));
         ObjectAnimator translationXAnim = ObjectAnimator.ofFloat(view, "translationX", -offsetX,offsetX - 1,-offsetX - 1,offsetX - 2,-offsetX - 2,offsetX - 3,-offsetX - 3,offsetX - 4,-offsetX - 4);
         translationXAnim.setDuration(2500 + (long) (Math.random() * 1000));
-        translationXAnim.setRepeatCount(0);//无限循环
+        translationXAnim.setRepeatCount(-1);//无限循环
         translationXAnim.setRepeatMode(ValueAnimator.INFINITE);//
 
         DecelerateInterpolator overshootInterpolator = new DecelerateInterpolator(1);
@@ -146,7 +174,7 @@ public abstract class BaseView extends View {
         float offsetY = (float) (3 + (Math.random() * 6));
         ObjectAnimator translationYAnim = ObjectAnimator.ofFloat(view, "translationY", -offsetY,offsetY - 1,-offsetY - 1,offsetY - 2,-offsetY - 2,offsetY - 3,-offsetY - 3,offsetY - 4,-offsetY - 4);
         translationYAnim.setDuration(2500 + (long) (Math.random() * 1000));
-        translationYAnim.setRepeatCount(0);
+        translationYAnim.setRepeatCount(-1);
         translationYAnim.setRepeatMode(ValueAnimator.INFINITE);
 //        translationYAnim.setInterpolator(overshootInterpolator);
         translationYAnim.start();
@@ -160,7 +188,9 @@ public abstract class BaseView extends View {
     }
     @Override
     protected void onDraw(Canvas canvas) {
-        int radius = width / 2;
+        int radius = getMyWidth() / 2;
         canvas.drawCircle(radius,radius,radius,paint);
     }
+
+
 }

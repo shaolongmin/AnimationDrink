@@ -7,6 +7,8 @@ import android.util.AttributeSet;
  * Created by 豪杰 on 2016/5/20.
  */
 public class BigView extends BaseView {
+
+
     public BigView(Context context) {
         super(context);
     }
@@ -25,4 +27,7 @@ public class BigView extends BaseView {
         setMyHeight((int) (height * 1.0f * 1.3f));
     }
 
+    public void toSmall(){
+
+    }
 }
